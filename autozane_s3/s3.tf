@@ -32,7 +32,7 @@ data "aws_iam_policy_document" "autozane_s3" {
     ]
 
     resources = [
-      "arn:aws:s3:::${aws_s3_bucket.s3_bucket.name}",
+      "arn:aws:s3:::${aws_s3_bucket.s3_bucket.id}",
     ]
 
     condition {
@@ -52,13 +52,13 @@ data "aws_iam_policy_document" "autozane_s3" {
     ]
 
     resources = [
-      "arn:aws:s3:::${aws_s3_bucket.s3_bucket.name}/home/",
-      "arn:aws:s3:::${aws_s3_bucket.s3_bucket.name}/home/*",
+      "arn:aws:s3:::${aws_s3_bucket.s3_bucket.id}/home/",
+      "arn:aws:s3:::${aws_s3_bucket.s3_bucket.id}/home/*",
     ]
   }
 }
 
 resource "aws_s3_bucket_policy" "autozane_s3_policy" {
-  bucket = "${aws_s3_bucket.s3_bucket.bucket}"
+  bucket = "${aws_s3_bucket.s3_bucket.id}"
   policy = "${data.aws_iam_policy_document.autozane_s3.json}"
 }
