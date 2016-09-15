@@ -49,7 +49,7 @@
       "source_ami": "{{user `source_ami`}}",
       "ssh_username": "ubuntu",
       "instance_type": "t2.micro",
-      "ami_name": "kafka"
+      "ami_name": "kafka-{{timestamp}}"
     }
   ],
   "post-processors": [ ]
