@@ -9,7 +9,7 @@
       "type"   : "shell",
       "inline" : [
         "sudo apt-get update",
-        "sudo apt-get -y install puppet curl python software-properties-common unzip",
+        "sudo apt-get -y install puppet curl python software-properties-common unzip openjdk-8-jre-headless zookeeper",
         "sudo wget -O /tmp/awslogs-agent-setup.py http://s3.amazonaws.com/aws-cloudwatch/downloads/latest/awslogs-agent-setup.py",
         "sudo chmod 775 /tmp/awslogs-agent-setup.py",
         "sudo mkdir -p /var/awslogs/etc/",
