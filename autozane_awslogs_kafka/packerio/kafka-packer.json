@@ -43,7 +43,7 @@
       "source_ami": "{{user `source_ami`}}",
       "ssh_username": "ubuntu",
       "instance_type": "t2.medium",
-      "ami_name": "kafka-{{timestamp}}"
+      "ami_name": "kafka"
     }
   ],
   "post-processors": [ ]
