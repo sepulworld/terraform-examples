@@ -1,6 +1,6 @@
 {
   "variables": {
-    "source_ami"           : "ami-367bab56",
+    "source_ami"           : "ami-746aba14",
     "aws_access_key"       : "{{ env `AWS_ACCESS_KEY_ID` }}",
     "aws_secret_key"       : "{{ env `AWS_SECRET_ACCESS_KEY` }}"
  },
