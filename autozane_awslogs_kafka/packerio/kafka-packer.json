@@ -53,5 +53,5 @@
       "ami_name": "kafka-{{timestamp}}"
     }
   ],
-  "post-processors": [ ]
+  "post-processors": ["vagrant"]
 }
