@@ -25,11 +25,17 @@
       "destination" : "/var/awslogs/etc/awslogs.conf.packer"
     },
     {
+      "type"        : "file",
+      "source"      : "systemd/kafka.service",
+      "destination" : "/etc/systemd/system/kafka.service"
+    },
+    {
       "type"   : "shell",
       "inline" : [
         "sudo python /tmp/awslogs-agent-setup.py --region=us-west-2 --non-interactive -c /var/awslogs/etc/awslogs.conf.packer",
         "sudo systemctl daemon-reload",
-        "sudo systemctl enable awslogs"
+        "sudo systemctl enable awslogs",
+        "sudo systemctl enable kafka"
       ],
       "execute_command" : "echo 'packer' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'"
     }
