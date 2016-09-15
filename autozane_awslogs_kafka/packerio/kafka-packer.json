@@ -1,0 +1,50 @@
+{
+  "variables": {
+    "source_ami"           : "ami-367bab56",
+    "aws_access_key"       : "{{ env `AWS_ACCESS_KEY_ID` }}",
+    "aws_secret_key"       : "{{ env `AWS_SECRET_ACCESS_KEY` }}"
+ },
+  "provisioners": [
+    {
+      "type"   : "shell",
+      "inline" : [
+        "sudo apt-get update",
+        "sudo apt-get -y install puppet curl python software-properties-common unzip",
+        "sudo wget -O /tmp/awslogs-agent-setup.py http://s3.amazonaws.com/aws-cloudwatch/downloads/latest/awslogs-agent-setup.py",
+        "sudo chmod 775 /tmp/awslogs-agent-setup.py",
+        "sudo mkdir -p /var/awslogs/etc/",
+        "sudo chmod -R 777 /var/awslogs/",
+        "sudo wget -qO - http://packages.confluent.io/deb/3.0/archive.key | sudo apt-key add -",
+        "sudo add-apt-repository 'deb [arch=amd64] http://packages.confluent.io/deb/3.0 stable main'",
+        "sudo apt-get update && sudo apt-get -y install confluent-platform-2.11"
+      ]
+    },
+    {
+      "type"        : "file",
+      "source"      : "awslogs/awslogs.conf.kafka",
+      "destination" : "/var/awslogs/etc/awslogs.conf.packer"
+    },
+    {
+      "type"   : "shell",
+      "inline" : [
+        "sudo python /tmp/awslogs-agent-setup.py --region=us-west-2 --non-interactive -c /var/awslogs/etc/awslogs.conf.packer",
+        "sudo systemctl daemon-reload",
+        "sudo systemctl enable awslogs"
+      ],
+      "execute_command" : "echo 'packer' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'"
+    }
+  ],
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "access_key": "{{user `aws_access_key`}}",
+      "secret_key": "{{user `aws_secret_key`}}",
+      "region": "us-west-2",
+      "source_ami": "{{user `source_ami`}}",
+      "ssh_username": "ubuntu",
+      "instance_type": "t2.medium",
+      "ami_name": "kafka"
+    }
+  ],
+  "post-processors": [ ]
+}
