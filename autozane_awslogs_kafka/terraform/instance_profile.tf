@@ -1,11 +1,12 @@
 resource "aws_iam_instance_profile" "kafka_instance_profile" {
-    name = "kafka-instance-profile"
-    roles = ["${aws_iam_role.kafka_role.name}"]
+  name  = "kafka-instance-profile"
+  roles = ["${aws_iam_role.kafka_role.name}"]
 }
 
 resource "aws_iam_role" "kafka_role" {
-    name = "kafka-role"
-    assume_role_policy = <<EOF
+  name = "kafka-role"
+
+  assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -23,9 +24,10 @@ EOF
 }
 
 resource "aws_iam_policy" "CloudWatchAccess" {
-    name = "CloudWatchAccess-kafka"
-    description = "CloudWatch Access"
-    policy = <<EOF
+  name        = "CloudWatchAccess-kafka"
+  description = "CloudWatch Access"
+
+  policy = <<EOF
 {
     "Version": "2012-10-17",
     "Statement": [
@@ -62,7 +64,7 @@ EOF
 }
 
 resource "aws_iam_policy_attachment" "attach_cloudwatch" {
-    name = "kafka-iam-attachment"
-    policy_arn = "${aws_iam_policy.CloudWatchAccess.arn}"
-    roles = ["${aws_iam_role.kafka_role.name}"]
+  name       = "kafka-iam-attachment"
+  policy_arn = "${aws_iam_policy.CloudWatchAccess.arn}"
+  roles      = ["${aws_iam_role.kafka_role.name}"]
 }
