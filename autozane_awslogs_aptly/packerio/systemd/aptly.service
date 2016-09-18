@@ -1,8 +1,8 @@
 [Unit]
 Description=Aptly Server
 Documentation=https://www.aptly.info/doc/overview/
-Requires=network.target remote-fs.target syslog.service
-After=network.target remote-fs.target syslog.service
+Requires=network.target remote-fs.target syslog.service awslogs.service
+After=network.target remote-fs.target syslog.service awslogs.service
 ConditionPathExists=/etc/aptly.conf
 
 [Service]
