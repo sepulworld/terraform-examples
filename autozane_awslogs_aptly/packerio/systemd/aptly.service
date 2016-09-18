@@ -10,7 +10,8 @@ Type=simple
 PIDFile=/var/run/aptly.pid
 User=root
 Group=root
-ExecStart=/usr/bin/aptly api serve -no-lock >> /var/log/aptly-api.log
+ExecStart=/bin/sh -c '/usr/bin/aptly api serve -no-lock >> /var/log/aptly-api.log 2>&1'
+ExecStop=kill -9 $(cat /var/run/aptly.pid)
 Restart=on-failure
 SyslogIdentifier=aptly
 
