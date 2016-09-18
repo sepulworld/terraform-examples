@@ -8,8 +8,6 @@
     {
       "type"   : "shell",
       "inline" : [
-	"sudo echo 'deb http://repo.aptly.info/ squeeze main' > /etc/apt/sources.list.d/aptly.list",
-	"sudo apt-key adv --keyserver keys.gnupg.net --recv-keys 2A194991",
 	"sudo apt-get update",
         "sudo apt-get -y install curl python software-properties-common xz-utils bzip2 gnupg wget graphviz",
         "sudo wget -O /tmp/awslogs-agent-setup.py http://s3.amazonaws.com/aws-cloudwatch/downloads/latest/awslogs-agent-setup.py",
@@ -39,6 +37,10 @@
         "sudo python /tmp/awslogs-agent-setup.py --region=us-west-2 --non-interactive -c /var/awslogs/etc/awslogs.conf.packer",
 	"mv /tmp/aptly.service /etc/systemd/system/aptly.service",
 	"mv /tmp/aptly.conf /etc/aptly.conf",
+	"echo 'deb http://repo.aptly.info/ squeeze main' > /etc/apt/sources.list.d/aptly.list",
+	"apt-key adv --keyserver keys.gnupg.net --recv-keys 2A194991",
+	"apt-get update",
+	"apt-get install aptly -y --force-yes",
 	"touch /var/log/aptly-api.log",
         "sudo systemctl daemon-reload",
         "sudo systemctl enable awslogs",
