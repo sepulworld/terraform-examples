@@ -1,0 +1,20 @@
+[Unit]
+Description=Aptly Server
+Documentation=https://www.aptly.info/doc/overview/
+Requires=network.target remote-fs.target syslog.service
+After=network.target remote-fs.target syslog.service
+ConditionPathExists=/etc/aptly.conf
+
+[Service]
+Type=simple
+PIDFile=/var/run/aptly.pid
+User=root
+Group=root
+WorkingDirectory=/usr/share/java/kafka
+EnvironmentFile=/etc/default/kafka
+ExecStart=/usr/bin/aptly api serve -no-lock >> /var/log/aptly-api.log
+Restart=on-failure
+SyslogIdentifier=aptly
+
+[Install]
+WantedBy=multi-user.target
