@@ -1,0 +1,5 @@
+meetup_san_francisco_infrastructure_as_code/bin
+meetup_san_francisco_infrastructure_as_code/.push-*
+meetup_san_francisco_infrastructure_as_code/.container-*
+meetup_san_francisco_infrastructure_as_code/.dockerfile-*
+meetup_san_francisco_infrastructure_as_code/.go
