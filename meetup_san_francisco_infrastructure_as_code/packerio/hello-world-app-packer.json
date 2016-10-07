@@ -35,7 +35,7 @@
       "source_ami": "{{user `source_ami`}}",
       "ssh_username": "ubuntu",
       "instance_type": "t2.micro",
-      "ami_name": "aptly-{{timestamp}}"
+      "ami_name": "go-hostname-{{timestamp}}"
     }
   ],
   "post-processors": ["vagrant"]
