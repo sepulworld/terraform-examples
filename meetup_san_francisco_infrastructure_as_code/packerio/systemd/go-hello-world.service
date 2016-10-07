@@ -1,0 +1,17 @@
+[Unit]
+Description=Hello World Go app
+Requires=network.target remote-fs.target syslog.service 
+After=network.target remote-fs.target syslog.service 
+
+[Service]
+Type=simple
+PIDFile=/var/run/goapp.pid
+User=root
+Group=root
+ExecStart=/bin/sh -c '/opt/go-hostname-app'
+ExecStop=kill -9 $(cat /var/run/goapp.pid)
+Restart=on-failure
+SyslogIdentifier=go-hostname-app
+
+[Install]
+WantedBy=multi-user.target
