@@ -16,9 +16,9 @@ type EC2Metadata struct {
 }
 
 type Page struct {
-    Ami string
-    Body  []byte
-    Hostname []byte 
+    Ami      string
+    Body     []byte
+    Hostname []byte
 }
 
 func loadPage(title string) (*Page, error) {
