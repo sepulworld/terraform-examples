@@ -24,9 +24,10 @@
       "type"   : "shell",
       "inline" : [
 	"mv /tmp/go-hello-world.service /etc/systemd/system/go-hello-world.service",
-	"mv /tmp/go-hostname-app /opt/go-hostname-app",
-	"mv /tmp/index.html /opt/index.html",
-	"chmod 775 /opt/go-hostname-app",
+	"mkdir /opt/demo-app/",
+	"mv /tmp/go-hostname-app /opt/demo-app/go-hostname-app",
+	"mv /tmp/index.html /opt/demo-app/index.html",
+	"chmod 775 /opt/demo-app/go-hostname-app",
         "sudo systemctl daemon-reload",
         "sudo systemctl enable go-hello-world"
       ],

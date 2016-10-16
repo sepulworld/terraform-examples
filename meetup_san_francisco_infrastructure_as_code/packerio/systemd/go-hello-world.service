@@ -8,10 +8,11 @@ Type=simple
 PIDFile=/var/run/goapp.pid
 User=root
 Group=root
-ExecStart=/bin/sh -c '/opt/go-hostname-app'
+ExecStart=/bin/sh -c '/opt/demo-app/go-hostname-app'
 ExecStop=kill -9 $(cat /var/run/goapp.pid)
 Restart=on-failure
 SyslogIdentifier=go-hostname-app
+WorkingDirectory=/opt/demo-app/
 
 [Install]
 WantedBy=multi-user.target
