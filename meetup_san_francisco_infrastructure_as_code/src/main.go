@@ -22,8 +22,7 @@ type Page struct {
     Hostname string 
 }
 
-func loadPage(filename string) (*Page, error) {
-    //filename := "index.html"
+func loadPage(filename string, ami string) (*Page, error) {
     cmd := exec.Command("/bin/hostname", "-f")
     var out bytes.Buffer
     cmd.Stdout = &out
@@ -35,14 +34,14 @@ func loadPage(filename string) (*Page, error) {
     if err != nil {
         return nil, err
     }
-    return &Page{Body: body, Hostname: out.String()}, nil
+    return &Page{Ami: ami, Body: body, Hostname: out.String()}, nil
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
     sess, err := session.NewSession()
     svc := ec2metadata.New(sess)
     ami, err := svc.GetMetadata("ami-id")
-    p, err := loadPage("index.html")
+    p, err := loadPage("index.html", ami)
     if err != nil {
 	    p = &Page{Ami: ami}
     }
