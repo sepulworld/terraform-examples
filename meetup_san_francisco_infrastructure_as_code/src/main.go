@@ -1,6 +1,7 @@
 package main
 
 import (
+    "bytes"
     "html/template"
     "net/http"
     "io/ioutil"
@@ -18,12 +19,15 @@ type EC2Metadata struct {
 type Page struct {
     Ami      string
     Body     []byte
-    Hostname []byte
+    Hostname string 
 }
 
-func loadPage(title string) (*Page, error) {
-    filename := title + ".html"
-    hostname, err := exec.Command("/bin/hostname", "-f").Output()
+func loadPage(filename string) (*Page, error) {
+    //filename := "index.html"
+    cmd := exec.Command("/bin/hostname", "-f")
+    var out bytes.Buffer
+    cmd.Stdout = &out
+    err := cmd.Run()
     if err != nil {
         log.Fatal(err)
     }
@@ -31,7 +35,7 @@ func loadPage(title string) (*Page, error) {
     if err != nil {
         return nil, err
     }
-    return &Page{Ami: title, Body: body, Hostname: hostname}, nil
+    return &Page{Body: body, Hostname: out.String()}, nil
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
@@ -44,8 +48,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
     }
     t, _ := template.ParseFiles("index.html")
     t.Execute(w, p)
-    //fmt.Fprintf(w, "AWS EC2 instance: %s", hostname)
-    //fmt.Fprintf(w, "AWS AMI: %s", ami)
 }
 
 func main() {
