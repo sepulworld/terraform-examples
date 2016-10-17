@@ -1,5 +1,5 @@
 module "asg" {
-    source              = "github.com/sepulworld/tf_asg.git?ref=v0.0.2"
+    source              = "github.com/sepulworld/tf_asg.git?ref=v0.0.3"
     name                = "myasg"
     vpc_zone_subnets    = "subnet-f05fdda8,subnet-2b82b64f,subnet-fc703f8a"
     security_groups     = "{aws_security_group.allow_goapp.id}"
