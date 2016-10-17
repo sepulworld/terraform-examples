@@ -7,3 +7,7 @@ module "elb" {
     health_check_port = "8000"
     health_check_url  = "HTTP:8000/"
 }
+
+output "elb_dns_name" {
+  value = "${module.elb.elb_dns_name}"
+}
