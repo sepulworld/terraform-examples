@@ -3,6 +3,7 @@ module "asg" {
     name                = "myasg"
     vpc_zone_subnets    = "subnet-f05fdda8,subnet-2b82b64f,subnet-fc703f8a"
     security_group      = "{aws_security_group.allow_goapp.id}"
+    instance_profile    = "${aws_iam_instance_profile.go_app_profile.name}"
     instance_type       = "t2.micro"
     ami                 = "${data.aws_ami.goapp.id}"
     key_name            = "autozane"
