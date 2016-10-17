@@ -2,7 +2,7 @@ module "asg" {
     source              = "github.com/sepulworld/tf_asg.git?ref=v0.0.3"
     name                = "myasg"
     vpc_zone_subnets    = "subnet-f05fdda8,subnet-2b82b64f,subnet-fc703f8a"
-    security_groups     = "{aws_security_group.allow_goapp.id}"
+    security_group      = "{aws_security_group.allow_goapp.id}"
     instance_type       = "t2.micro"
     ami                 = "${data.aws_ami.goapp.id}"
     key_name            = "autozane"
