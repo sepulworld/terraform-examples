@@ -12,12 +12,12 @@
     },
     {
       "type"        : "file",
-      "source"      : "../src/go-hostname-app",
+      "source"      : "../../src/go-hostname-app",
       "destination" : "/tmp/go-hostname-app"
     },
     {
       "type"        : "file",
-      "source"      : "../src/index.html",
+      "source"      : "../../src/index.html",
       "destination" : "/tmp/index.html"
     },
     {
