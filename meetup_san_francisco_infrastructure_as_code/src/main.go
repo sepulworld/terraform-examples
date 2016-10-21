@@ -1,55 +1,55 @@
 package main
 
 import (
-    "bytes"
-    "html/template"
-    "net/http"
-    "io/ioutil"
-    "os/exec"
-    "log"
-    "github.com/aws/aws-sdk-go/aws/client"
-    "github.com/aws/aws-sdk-go/aws/session"
-    "github.com/aws/aws-sdk-go/aws/ec2metadata"
+	"bytes"
+	"github.com/aws/aws-sdk-go/aws/client"
+	"github.com/aws/aws-sdk-go/aws/ec2metadata"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"html/template"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"os/exec"
 )
 
 type EC2Metadata struct {
-   *client.Client
+	*client.Client
 }
 
 type Page struct {
-    Ami      string
-    Body     []byte
-    Hostname string 
+	Ami      string
+	Body     []byte
+	Hostname string
 }
 
 func loadPage(filename string, ami string) (*Page, error) {
-    cmd := exec.Command("/bin/hostname", "-f")
-    var out bytes.Buffer
-    cmd.Stdout = &out
-    err := cmd.Run()
-    if err != nil {
-        log.Fatal(err)
-    }
-    body, err := ioutil.ReadFile(filename)
-    if err != nil {
-        return nil, err
-    }
-    return &Page{Ami: ami, Body: body, Hostname: out.String()}, nil
+	cmd := exec.Command("/bin/hostname", "-f")
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	err := cmd.Run()
+	if err != nil {
+		log.Fatal(err)
+	}
+	body, err := ioutil.ReadFile(filename)
+	if err != nil {
+		return nil, err
+	}
+	return &Page{Ami: ami, Body: body, Hostname: out.String()}, nil
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-    sess, err := session.NewSession()
-    svc := ec2metadata.New(sess)
-    ami, err := svc.GetMetadata("ami-id")
-    p, err := loadPage("index.html", ami)
-    if err != nil {
-	    p = &Page{Ami: ami}
-    }
-    t, _ := template.ParseFiles("index.html")
-    t.Execute(w, p)
+	sess, err := session.NewSession()
+	svc := ec2metadata.New(sess)
+	ami, err := svc.GetMetadata("ami-id")
+	p, err := loadPage("index.html", ami)
+	if err != nil {
+		p = &Page{Ami: ami}
+	}
+	t, _ := template.ParseFiles("index.html")
+	t.Execute(w, p)
 }
 
 func main() {
-    http.HandleFunc("/", handler)
-    http.ListenAndServe(":8000", nil)
+	http.HandleFunc("/", handler)
+	http.ListenAndServe(":8000", nil)
 }
