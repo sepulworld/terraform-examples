@@ -1,6 +1,6 @@
 module "asg" {
     source              = "github.com/sepulworld/tf_asg.git?ref=v0.0.3"
-    name                = "myasg"
+    name                = "truami"
     vpc_zone_subnets    = "subnet-f05fdda8,subnet-2b82b64f,subnet-fc703f8a"
     security_group      = "${aws_security_group.allow_truami.id}"
     instance_profile    = "${aws_iam_instance_profile.truami_app_profile.name}"
