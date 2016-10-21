@@ -7,13 +7,13 @@
   "provisioners": [
     {
       "type"        : "file",
-      "source"      : "systemd/go-hello-world.service",
-      "destination" : "/tmp/go-hello-world.service"
+      "source"      : "systemd/truami.service",
+      "destination" : "/tmp/truami.service"
     },
     {
       "type"        : "file",
-      "source"      : "../../src/go-hostname-app",
-      "destination" : "/tmp/go-hostname-app"
+      "source"      : "../../src/bin/truami",
+      "destination" : "/tmp/truami"
     },
     {
       "type"        : "file",
@@ -23,13 +23,13 @@
     {
       "type"   : "shell",
       "inline" : [
-	"mv /tmp/go-hello-world.service /etc/systemd/system/go-hello-world.service",
+	"mv /tmp/truami.service /etc/systemd/system/truami.service",
 	"mkdir /opt/demo-app/",
-	"mv /tmp/go-hostname-app /opt/demo-app/go-hostname-app",
+	"mv /tmp/truami /opt/demo-app/truami",
 	"mv /tmp/index.html /opt/demo-app/index.html",
-	"chmod 775 /opt/demo-app/go-hostname-app",
+	"chmod 775 /opt/demo-app/truami",
         "sudo systemctl daemon-reload",
-        "sudo systemctl enable go-hello-world"
+        "sudo systemctl enable truami"
       ],
       "execute_command" : "echo 'packer' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'"
     }
@@ -43,7 +43,7 @@
       "source_ami": "{{user `source_ami`}}",
       "ssh_username": "ubuntu",
       "instance_type": "t2.micro",
-      "ami_name": "go-hostname-app-{{timestamp}}"
+      "ami_name": "truami-app-{{timestamp}}"
     }
   ],
   "post-processors": ["vagrant"]

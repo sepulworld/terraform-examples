@@ -1,10 +1,10 @@
-resource "aws_iam_instance_profile" "go_app_profile" {
-    name = "go_app_profile"
+resource "aws_iam_instance_profile" "truami_app_profile" {
+    name = "truami_app_profile"
     roles = ["${aws_iam_role.role.name}"]
 }
 
 resource "aws_iam_role" "role" {
-    name = "go_app_role"
+    name = "truami_app_role"
     path = "/"
     assume_role_policy = <<EOF
 {

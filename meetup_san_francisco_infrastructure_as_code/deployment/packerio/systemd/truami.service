@@ -5,13 +5,13 @@ After=network.target remote-fs.target syslog.service
 
 [Service]
 Type=simple
-PIDFile=/var/run/goapp.pid
+PIDFile=/var/run/truami.pid
 User=root
 Group=root
-ExecStart=/bin/sh -c '/opt/demo-app/go-hostname-app'
-ExecStop=kill -9 $(cat /var/run/goapp.pid)
+ExecStart=/bin/sh -c '/opt/demo-app/truami'
+ExecStop=kill -9 $(cat /var/run/truami.pid)
 Restart=on-failure
-SyslogIdentifier=go-hostname-app
+SyslogIdentifier=truami
 WorkingDirectory=/opt/demo-app/
 
 [Install]

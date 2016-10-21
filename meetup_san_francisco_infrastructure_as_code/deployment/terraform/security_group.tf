@@ -1,5 +1,5 @@
-resource "aws_security_group" "allow_goapp" {
-  name = "allow_goapp"
+resource "aws_security_group" "allow_truami" {
+  name = "allow_truami"
   description = "Allow 8000, 443 and SSH inbound traffic"
 
   ingress {

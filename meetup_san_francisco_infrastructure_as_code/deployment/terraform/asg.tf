@@ -2,10 +2,10 @@ module "asg" {
     source              = "github.com/sepulworld/tf_asg.git?ref=v0.0.3"
     name                = "myasg"
     vpc_zone_subnets    = "subnet-f05fdda8,subnet-2b82b64f,subnet-fc703f8a"
-    security_group      = "${aws_security_group.allow_goapp.id}"
-    instance_profile    = "${aws_iam_instance_profile.go_app_profile.name}"
+    security_group      = "${aws_security_group.allow_truami.id}"
+    instance_profile    = "${aws_iam_instance_profile.truami_app_profile.name}"
     instance_type       = "t2.micro"
-    ami                 = "${data.aws_ami.goapp.id}"
+    ami                 = "${data.aws_ami.truami.id}"
     key_name            = "autozane"
     user_data           = "userdata.sh"
     asg_min_instances   = "1"
@@ -17,12 +17,12 @@ module "asg" {
     team                = "autozane"
 }
 
-data "aws_ami" "goapp" {  
+data "aws_ami" "truami" {  
   most_recent = true
 
   filter {
     name   = "name"
-    values = ["go-hostname-app-*"]
+    values = ["truami-app-*"]
   }
 
   owners = ["self"]
